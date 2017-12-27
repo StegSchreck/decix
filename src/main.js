@@ -4,6 +4,8 @@ import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import App from './App'
 import router from './router'
+import ElementUI from 'element-ui'
+import '../theme/index.css'
 
 import 'isomorphic-fetch'
 
@@ -32,6 +34,7 @@ const apolloClient = new ApolloClient({
 })
 
 Vue.use(VueApollo)
+Vue.use(ElementUI)
 
 let loading = 0
 

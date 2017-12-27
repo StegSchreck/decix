@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/decix.png">
-    <router-view/>
+    <topnav></topnav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Topnav from './components/TopNav'
+
 export default {
+  components: {Topnav},
   name: 'app'
 }
 </script>
@@ -18,6 +21,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
