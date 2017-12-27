@@ -10,7 +10,7 @@ import '../theme/index.css'
 import 'isomorphic-fetch'
 
 import { ApolloClient, createNetworkInterface } from 'apollo-client'
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
+// import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
 
 const GRAPHQL_SERVER_HOST = 'localhost'
 const GRAPHQL_SERVER_PORT = 3000
@@ -19,24 +19,25 @@ const networkInterface = createNetworkInterface({
   uri: `http://${GRAPHQL_SERVER_HOST}:${GRAPHQL_SERVER_PORT}/graphql`
 })
 
-const wsClient = new SubscriptionClient(`ws://${GRAPHQL_SERVER_HOST}:${GRAPHQL_SERVER_PORT}/subscriptions`, {
-  reconnect: true
-})
-
-const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-  networkInterface,
-  wsClient
-)
+// const wsClient = new SubscriptionClient(`ws://${GRAPHQL_SERVER_HOST}:${GRAPHQL_SERVER_PORT}/subscriptions`, {
+//   reconnect: true
+// })
+//
+// const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+//   networkInterface,
+//   wsClient
+// )
 
 const apolloClient = new ApolloClient({
-  networkInterface: networkInterfaceWithSubscriptions,
+  // networkInterface: networkInterfaceWithSubscriptions,
+  networkInterface: networkInterface,
   connectToDevTools: true
 })
 
 Vue.use(VueApollo)
 Vue.use(ElementUI)
 
-let loading = 0
+// let loading = 0
 
 const apolloProvider = new VueApollo({
   clients: {
@@ -46,10 +47,10 @@ const apolloProvider = new VueApollo({
   defaultOptions: {
     // $loadingKey: 'loading',
   },
-  watchLoading (state, mod) {
-    loading += mod
-    console.log('Global loading', loading, mod)
-  },
+  // watchLoading (state, mod) {
+  //   loading += mod
+  //   console.log('Global loading', loading, mod)
+  // },
   errorHandler (error) {
     console.log('Global error handler')
     console.error(error)
