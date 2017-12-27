@@ -1,11 +1,11 @@
 <template>
-  <div id="apollo">
+  <div id="users">
     <h1>Vue Apollo Integration</h1>
 
     <h2>Users</h2>
     <div class="users">
       <div v-for="user in allUsers" :class="['user',{optimistic: user.id === -1}]" :title="user.id">
-        {{ user.email }}
+        {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
       </div>
     </div>
   </div>
@@ -15,10 +15,12 @@
   import gql from 'graphql-tag'
 
   export default {
-    name: 'apollo',
+    name: 'users',
     apollo: {
       allUsers: gql`query {
         allUsers {
+          firstName
+          lastName
           email
         }
       }`
@@ -38,17 +40,11 @@
     font-size: 12pt;
   }
 
-  #apollo {
+  #users {
     max-width: 500px;
     padding: 12px;
     margin: auto;
     text-align: center;
-  }
-
-  .info,
-  .loading {
-    color: #999;
-    margin: 12px;
   }
 
   .user {
@@ -62,32 +58,5 @@
 
   .user.optimistic {
     background: #b76c40;
-  }
-
-  form {
-    margin: 22px;
-  }
-
-  input {
-    padding: 8px;
-    border: solid 1px #bbb;
-    border-radius: 2px;
-  }
-
-  input:focus {
-    box-shadow: none;
-    outline: none;
-    border-color: #40b883;
-  }
-
-  .user-list {
-    text-align: left;
-    border: solid 1px #40b883;
-    padding: 10px;
-    border-radius: 3px;
-  }
-
-  .actions {
-    text-align: center;
   }
 </style>
