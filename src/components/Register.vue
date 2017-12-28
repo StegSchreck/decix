@@ -7,7 +7,7 @@
         <div id="RegistrationForm">
           <el-form :model="registrationForm" status-icon :rules="rules" ref="registrationForm" label-width="140px" status-icon>
             <el-form-item prop="firstName" label="First name">
-              <el-input v-model="registrationForm.firstName"></el-input>
+              <el-input v-model="registrationForm.firstName" autofocus></el-input>
             </el-form-item>
             <el-form-item prop="lastName" label="Last name">
               <el-input v-model="registrationForm.lastName"></el-input>

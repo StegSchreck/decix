@@ -7,7 +7,7 @@
         <div id="LoginForm">
           <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="140px" status-icon>
             <el-form-item prop="email" label="Email">
-              <el-input v-model="loginForm.email"></el-input>
+              <el-input v-model="loginForm.email" autofocus></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="pass">
               <el-input type="password" v-model="loginForm.pass" auto-complete="off"></el-input>
