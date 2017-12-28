@@ -6,7 +6,7 @@
       <el-menu-item index="apollo">Apollo</el-menu-item>
       <el-container id="HeaderLoginButton">
         <el-button type="primary" icon="el-icon-arrow-right" @click="goToLoginPage">Login</el-button>
-        <el-button icon="el-icon-arrow-right" @click="goToSignUpPage">Sign Up</el-button>
+        <el-button icon="el-icon-arrow-right" @click="goToRegistrationPage">Register</el-button>
       </el-container>
     </el-menu>
     <!--<div class="line"></div>-->
@@ -32,8 +32,8 @@
       goToLoginPage () {
         this.$router.push('/login')
       },
-      goToSignUpPage () {
-        this.$router.push('/sign-up')
+      goToRegistrationPage () {
+        this.$router.push('/register')
       }
     }
   }

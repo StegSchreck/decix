@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Apollo from '@/components/Apollo'
 import Users from '@/components/Users'
 import Login from '@/components/Login'
-import SignUp from '@/components/SignUp'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -14,6 +14,6 @@ export default new Router({
     { path: '/apollo', name: 'Apollo', component: Apollo },
     { path: '/users', name: 'Users', component: Users },
     { path: '/login', name: 'Login', component: Login },
-    { path: '/sign-up', name: 'SignUp', component: SignUp }
+    { path: '/register', name: 'Register', component: Register }
   ]
 })

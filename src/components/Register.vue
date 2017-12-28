@@ -1,37 +1,36 @@
 <template>
-  <div id="SignUp">
+  <div id="Register">
     <h1>Sign Up</h1>
-
     <el-row :gutter="20">
       <el-col :xs="3" :sm="2" :md="3" :lg="4" :xl="6">&nbsp;</el-col>
       <el-col :xs="20" :sm="20" :md="18" :lg="16" :xl="12">
         <div id="RegistrationForm">
-          <el-form :model="registrationForm" status-icon :rules="rules" ref="registrationForm" label-width="140px" status-icon>
+          <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="140px" status-icon>
             <el-form-item prop="firstName" label="First name">
-              <el-input v-model="registrationForm.firstName"></el-input>
+              <el-input v-model="loginForm.firstName"></el-input>
             </el-form-item>
             <el-form-item prop="lastName" label="Last name">
-              <el-input v-model="registrationForm.lastName"></el-input>
+              <el-input v-model="loginForm.lastName"></el-input>
             </el-form-item>
             <el-form-item prop="email" label="Email">
-              <el-input v-model="registrationForm.email"></el-input>
+              <el-input v-model="loginForm.email"></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="pass">
-              <el-input type="password" v-model="registrationForm.pass" auto-complete="off"></el-input>
+              <el-input type="password" v-model="loginForm.pass" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Confirm Password" prop="checkPass">
-              <el-input type="password" v-model="registrationForm.checkPass" auto-complete="off"></el-input>
+              <el-input type="password" v-model="loginForm.checkPass" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('registrationForm')">Submit</el-button>
-              <el-button @click="resetForm('registrationForm')">Reset</el-button>
+              <el-button type="primary" @click="submitForm('loginForm')">Create account</el-button>
+              <el-button @click="resetForm('loginForm')">Reset</el-button>
             </el-form-item>
           </el-form>
         </div>
       </el-col>
       <el-col :xs="1" :sm="2" :md="3" :lg="4" :xl="6">&nbsp;</el-col>
     </el-row>
-    <div>Already have an account?   <router-link to="login">Login here.</router-link></div>
+    <div>Already have an account? <router-link to="login">Login here.</router-link></div>
   </div>
 </template>
 
@@ -40,20 +39,13 @@
   import gql from 'graphql-tag'
 
   export default {
-    apollo: {
-      allUsers: gql`query {
-        allUsers {
-          email
-        }
-      }`
-    },
     data () {
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please choose your password'))
         } else {
-          if (this.registrationForm.checkPass !== '') {
-            this.$refs.registrationForm.validateField('checkPass')
+          if (this.loginForm.checkPass !== '') {
+            this.$refs.loginForm.validateField('checkPass')
           }
           callback()
         }
@@ -61,7 +53,7 @@
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please confirm your chosen password'))
-        } else if (value !== this.registrationForm.pass) {
+        } else if (value !== this.loginForm.pass) {
           callback(new Error('The entered passwords don\'t match!'))
         } else {
           callback()
@@ -97,10 +89,12 @@
       }
       return {
         allUsers: [],
-        registrationForm: {
+        loginForm: {
+          firstName: '',
+          lastName: '',
+          email: '',
           pass: '',
-          checkPass: '',
-          age: ''
+          checkPass: ''
         },
         rules: {
           firstName: [
@@ -146,7 +140,7 @@
   body {
     min-width: 440px;
   }
-  #SignUp {
+  #Register {
     min-width: 400px;
   }
   #RegistrationForm {
