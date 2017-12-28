@@ -123,8 +123,8 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($firstName: String!, $lastName: String!, $email: String!) {
-                addUser(firstName: $firstName, lastName: $lastName, email: $email) {
+              mutation: gql`mutation ($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+                addUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
                   id
                   firstName
                   lastName
@@ -134,7 +134,8 @@
               variables: {
                 firstName: this.registrationForm.firstName,
                 lastName: this.registrationForm.lastName,
-                email: this.registrationForm.email
+                email: this.registrationForm.email,
+                password: this.registrationForm.pass
               }
             }).then((data) => {
               // Result
