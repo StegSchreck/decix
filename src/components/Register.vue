@@ -66,14 +66,14 @@
           let emailTaken = false
           this.$apollo.query({
             query: gql`query{
-              allUsers {
+              user {
                 email
               }
             }`}).then((data) => {
               // Result
-              const usrs = data.data.allUsers
-              for (let i = 0; i < usrs.length; i++) {
-                let user = usrs[0]
+              const users = data.data.user
+              for (let i = 0; i < users.length; i++) {
+                let user = users[0]
                 if (user.email === value) {
                   emailTaken = true
                 }

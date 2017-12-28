@@ -4,8 +4,8 @@
 
     <h2>Users</h2>
     <div class="users">
-      <div v-for="user in allUsers" :class="['user',{optimistic: user.id === -1}]" :title="user.id">
-        {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+      <div v-for="u in user" :class="['user',{optimistic: u.id === -1}]" :title="u.id">
+        {{ u.firstName }} {{ u.lastName }} - {{ u.email }}
       </div>
     </div>
   </div>
@@ -17,8 +17,8 @@
   export default {
     name: 'users',
     apollo: {
-      allUsers: gql`query {
-        allUsers {
+      user: gql`query {
+        user {
           firstName
           lastName
           email
@@ -28,7 +28,7 @@
 
     data () {
       return {
-        allUsers: []
+        user: []
       }
     }
   }
