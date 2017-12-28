@@ -34,9 +34,6 @@
         if (value === '') {
           callback(new Error('Please choose your password'))
         } else {
-          if (this.loginForm.checkPass !== '') {
-            this.$refs.loginForm.validateField('checkPass')
-          }
           callback()
         }
       }
@@ -44,31 +41,26 @@
         if (value === '') {
           callback(new Error('Please enter your email address'))
         } else {
-          let emailTaken = false
           this.$apollo.query({
-            query: gql`query{
-              allUsers {
+            query: gql`query ($email: String!) {
+              user (email: $email) {
                 email
               }
-            }`}).then((data) => {
-              // Result
-              const usrs = data.data.allUsers
-              for (let i = 0; i < usrs.length; i++) {
-                let user = usrs[0]
-                if (user.email === value) {
-                  emailTaken = true
-                }
-              }
-              if (emailTaken) {
-                callback()
-              } else {
-                callback(new Error('This email is not registered'))
-              }
-            })
+            }`,
+            variables: {
+              email: this.loginForm.email
+            }
+          }).then((data) => {
+            // Result
+            if (data.data.user.length > 0) {
+              callback()
+            } else {
+              callback(new Error('This email is not registered'))
+            }
+          })
         }
       }
       return {
-        allUsers: [],
         loginForm: {
           email: '',
           pass: ''
@@ -90,7 +82,29 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!')
+            this.$apollo.mutate({
+              mutation: gql`mutation ($email: String!, $password: String!) {
+                authenticateUser(email: $email, password: $password) {
+                  id
+                  firstName
+                  lastName
+                  email
+                }
+              }`,
+              variables: {
+                email: this.loginForm.email,
+                password: this.loginForm.pass
+              }
+            }).then((data) => {
+              // Result
+              console.log(data.data)
+              if (data.data.authenticateUser) this.$router.push('/users')
+              else return false
+            }).catch((error) => {
+              // Error
+              console.error(error)
+              return false
+            })
           } else {
             return false
           }
