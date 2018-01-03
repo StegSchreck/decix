@@ -10,6 +10,7 @@ export default new Router({
   routes: [
     { path: '/', name: 'Hello', component: HelloWorld },
     { path: '/apollo', name: 'Apollo', component: Apollo },
-    { path: '/matrixes', name: 'Matrixes', component: Matrixes }
+    { path: '/matrixes', name: 'Matrixes', component: Matrixes },
+    { path: '*', redirect: '/' }
   ]
 })
