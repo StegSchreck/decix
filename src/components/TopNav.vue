@@ -4,6 +4,7 @@
       <el-menu-item index="/"><img src="../assets/decix.png" height="50%"></el-menu-item>
       <el-menu-item index="apollo">Apollo</el-menu-item>
       <el-menu-item index="matrixes">Matrixes</el-menu-item>
+      <el-menu-item index="categories">Categories</el-menu-item>
     </el-menu>
   </div>
 </template>
