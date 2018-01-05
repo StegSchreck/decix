@@ -46,7 +46,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($title: String!, sorting: Int!) {
+              mutation: gql`mutation ($title: String!, $sorting: Int!) {
                   createAlternative(title: $title, sorting: $sorting) {
                     id
                   }

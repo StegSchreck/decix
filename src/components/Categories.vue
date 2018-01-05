@@ -47,7 +47,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($title: String!, sorting: Int!) {
+              mutation: gql`mutation ($title: String!, $sorting: Int!) {
                   createCategory(title: $title, sorting: $sorting) {
                     id
                   }
