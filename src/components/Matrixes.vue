@@ -3,7 +3,7 @@
     <h1>Existing Matrixes</h1>
     <div class="matrixes">
       <div v-for="item in matrix" :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
-        {{ item.id }} - {{ item.title }}
+        <router-link :to="{ name: 'Matrix', params: { id: item.id } }">{{ item.id }} - {{ item.title }}</router-link>
       </div>
     </div>
   </div>

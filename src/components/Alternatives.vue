@@ -3,7 +3,7 @@
     <h1>Existing Alternatives</h1>
     <div class="alternatives">
       <div v-for="item in alternative" :class="['alternative',{optimistic: item.id === -1}]" :title="item.id">
-        {{ item.sorting }}: {{ item.id }} - {{ item.title }}
+        <router-link :to="{ name: 'Alternative', params: { id: item.id } }"> {{ item.sorting }}: {{ item.id }} - {{ item.title }}</router-link>
       </div>
     </div>
   </div>
