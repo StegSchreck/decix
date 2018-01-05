@@ -5,6 +5,7 @@
       <div v-for="item in matrix" :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
         {{ item.id }} - {{ item.title }}
       </div>
+      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"></el-button>
     </div>
   </div>
 </template>
@@ -31,6 +32,27 @@
       return {
         matrix: [],
         itemId: this.$route.params.id
+      }
+    },
+    methods: {
+      deleteItem () {
+        this.$apollo.mutate({
+          mutation: gql`mutation ($id: ID!) {
+              deleteMatrix(id: $id)
+            }`,
+          variables: {
+            id: this.itemId
+          }
+        }).then((data) => {
+          // Result
+          console.log(data.data.deleteMatrix)
+          if (data.data.deleteMatrix) this.$router.push('/matrixes')
+          else return false
+        }).catch((error) => {
+          // Error
+          console.error(error)
+          return false
+        })
       }
     }
   }

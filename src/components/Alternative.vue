@@ -5,6 +5,7 @@
       <div v-for="item in alternative" :class="['alternative',{optimistic: item.id === -1}]" :title="item.id">
         {{ item.id }} - {{ item.title }}
       </div>
+      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"></el-button>
     </div>
   </div>
 </template>
@@ -31,6 +32,27 @@
       return {
         alternative: [],
         itemId: this.$route.params.id
+      }
+    },
+    methods: {
+      deleteItem () {
+        this.$apollo.mutate({
+          mutation: gql`mutation ($id: ID!) {
+              deleteAlternative(id: $id)
+            }`,
+          variables: {
+            id: this.itemId
+          }
+        }).then((data) => {
+          // Result
+          console.log(data.data.deleteAlternative)
+          if (data.data.deleteAlternative) this.$router.push('/alternatives')
+          else return false
+        }).catch((error) => {
+          // Error
+          console.error(error)
+          return false
+        })
       }
     }
   }
