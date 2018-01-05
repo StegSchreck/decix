@@ -14,7 +14,7 @@
   export default {
     apollo: {
       alternative: {
-        query: gql`query Alternative($id: String!){
+        query: gql`query Alternative($id: ID!){
           alternative (id: $id){
             id
             title

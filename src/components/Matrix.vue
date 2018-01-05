@@ -14,7 +14,7 @@
   export default {
     apollo: {
       matrix: {
-        query: gql`query Matrix($id: String!){
+        query: gql`query Matrix($id: ID!){
           matrix (id: $id){
             id
             title

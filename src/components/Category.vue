@@ -14,7 +14,7 @@
   export default {
     apollo: {
       category: {
-        query: gql`query Category($id: String!){
+        query: gql`query Category($id: ID!){
           category (id: $id){
             id
             title
