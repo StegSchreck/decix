@@ -37,4 +37,12 @@
     background-color: white;
     padding: 5px 10px;
   }
+  a {
+    color: #41B883;
+    text-decoration: none;
+  }
+  a:visited, a:visited {
+    color: #7ACDA8;
+    text-decoration: none;
+  }
 </style>
