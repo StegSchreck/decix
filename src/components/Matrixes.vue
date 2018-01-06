@@ -11,7 +11,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-for="item in matrix" :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
+      <div v-for="item in allMatrixes" :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
         <router-link :to="{ name: 'Matrix', params: { id: item.id } }">{{ item.id }} - {{ item.title }}</router-link>
       </div>
     </div>
@@ -22,12 +22,38 @@
   import gql from 'graphql-tag'
   export default {
     apollo: {
-      matrix: gql`query {
-        matrix {
-          id
-          title
-        }
-      }`
+      matrix: {
+        query: gql`query {
+          matrix {
+            id
+            title
+          }
+        }`,
+        update (data) {
+          return data.matrix
+        },
+        subscribeToMore: [{
+          document: gql`subscription matrix {
+            matrixAdded {
+              id
+              title
+            }
+          }`,
+          // Mutate the previous result
+          updateQuery: (previousResult, { subscriptionData }) => {
+            if (previousResult.matrix.find(item => item.id === subscriptionData.data.matrixAdded.id)) {
+              return previousResult
+            }
+            return {
+              matrix: [
+                ...previousResult.matrix,
+                // Add the new matrix
+                subscriptionData.data.matrixAdded
+              ]
+            }
+          }
+        }]
+      }
     },
     data () {
       return {
@@ -35,6 +61,11 @@
         createForm: {
           title: ''
         }
+      }
+    },
+    computed: {
+      allMatrixes: function () {
+        return this.matrix
       }
     },
     methods: {
@@ -52,9 +83,9 @@
               }
             }).then((data) => {
               // Result
-              console.log(data.data)
-              if (data.data.createMatrix) this.$router.push('/matrix/' + data.data.createMatrix.id)
-              else return false
+              // console.log(data.data)
+              // if (data.data.createMatrix) this.$router.push('/matrix/' + data.data.createMatrix.id)
+              return !!data.data.createMatrix
             }).catch((error) => {
               // Error
               console.error(error)

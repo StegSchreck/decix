@@ -38,7 +38,7 @@ const apolloClient = new ApolloClient({
 Vue.use(VueApollo)
 Vue.use(ElementUI)
 
-let loading = 0
+// let loading = 0
 
 const apolloProvider = new VueApollo({
   clients: {
@@ -46,10 +46,10 @@ const apolloProvider = new VueApollo({
   },
   defaultClient: apolloClient,
   defaultOptions: {},
-  watchLoading (state, mod) {
-    loading += mod
-    console.log('Global loading', loading, mod)
-  },
+  // watchLoading (state, mod) {
+    // loading += mod
+    // console.log('Global loading', loading, mod)
+  // },
   errorHandler (error) {
     console.log('Global error handler')
     console.error(error)
