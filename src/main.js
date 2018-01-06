@@ -38,18 +38,12 @@ const apolloClient = new ApolloClient({
 Vue.use(VueApollo)
 Vue.use(ElementUI)
 
-// let loading = 0
-
 const apolloProvider = new VueApollo({
   clients: {
     a: apolloClient
   },
   defaultClient: apolloClient,
   defaultOptions: {},
-  // watchLoading (state, mod) {
-    // loading += mod
-    // console.log('Global loading', loading, mod)
-  // },
   errorHandler (error) {
     console.log('Global error handler')
     console.error(error)

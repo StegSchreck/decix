@@ -11,16 +11,12 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { ALTERNATIVE_QUERY, DELETE_ALTERNATIVE_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
       alternative: {
-        query: gql`query Alternative($id: ID!){
-          alternative (id: $id){
-            id
-            title
-          }
-        }`,
+        query: ALTERNATIVE_QUERY,
         variables () {
           return {
             id: this.itemId
@@ -37,19 +33,15 @@
     methods: {
       deleteItem () {
         this.$apollo.mutate({
-          mutation: gql`mutation ($id: ID!) {
-              deleteAlternative(id: $id)
-            }`,
+          mutation: DELETE_ALTERNATIVE_MUTATION,
           variables: {
             id: this.itemId
           }
         }).then((data) => {
-          // Result
-          console.log(data.data.deleteAlternative)
+          // console.log(data.data.deleteAlternative)
           if (data.data.deleteAlternative) this.$router.push('/alternatives')
           else return false
         }).catch((error) => {
-          // Error
           console.error(error)
           return false
         })

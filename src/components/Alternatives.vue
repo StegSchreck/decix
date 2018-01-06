@@ -19,16 +19,11 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { ALL_ALTERNATIVES_QUERY, NEW_ALTERNATIVE_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
-      alternative: gql`query {
-        alternative {
-          id
-          title
-          sorting
-        }
-      }`
+      alternative: ALL_ALTERNATIVES_QUERY
     },
     data () {
       return {
@@ -46,22 +41,16 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($title: String!, $sorting: Int!) {
-                  createAlternative(title: $title, sorting: $sorting) {
-                    id
-                  }
-                }`,
+              mutation: NEW_ALTERNATIVE_MUTATION,
               variables: {
                 title: this.createForm.title,
                 sorting: this.getHighestSorting() + 1
               }
             }).then((data) => {
-              // Result
-              console.log(data.data)
+              // console.log(data.data)
               if (data.data.createAlternative) this.$router.push('/alternative/' + data.data.createAlternative.id)
               else return false
             }).catch((error) => {
-              // Error
               console.error(error)
               return false
             })

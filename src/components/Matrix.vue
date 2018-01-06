@@ -11,16 +11,12 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { MATRIX_QUERY, DELETE_MATRIX_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
       matrix: {
-        query: gql`query Matrix($id: ID!){
-          matrix (id: $id){
-            id
-            title
-          }
-        }`,
+        query: MATRIX_QUERY,
         variables () {
           return {
             id: this.itemId
@@ -37,19 +33,15 @@
     methods: {
       deleteItem () {
         this.$apollo.mutate({
-          mutation: gql`mutation ($id: ID!) {
-              deleteMatrix(id: $id)
-            }`,
+          mutation: DELETE_MATRIX_MUTATION,
           variables: {
             id: this.itemId
           }
         }).then((data) => {
-          // Result
-          console.log(data.data.deleteMatrix)
+          // console.log(data.data.deleteMatrix)
           if (data.data.deleteMatrix) this.$router.push('/matrixes')
           else return false
         }).catch((error) => {
-          // Error
           console.error(error)
           return false
         })

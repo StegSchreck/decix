@@ -19,26 +19,17 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { ALL_MATRIXES_QUERY, NEW_MATRIX_SUBSCRIPTION, NEW_MATRIX_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
       matrix: {
-        query: gql`query {
-          matrix {
-            id
-            title
-          }
-        }`,
+        query: ALL_MATRIXES_QUERY,
         update (data) {
           return data.matrix
         },
         subscribeToMore: [{
-          document: gql`subscription matrix {
-            matrixAdded {
-              id
-              title
-            }
-          }`,
+          document: NEW_MATRIX_SUBSCRIPTION,
           // Mutate the previous result
           updateQuery: (previousResult, { subscriptionData }) => {
             if (previousResult.matrix.find(item => item.id === subscriptionData.data.matrixAdded.id)) {
@@ -73,21 +64,15 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($title: String!) {
-                  createMatrix(title: $title) {
-                    id
-                  }
-                }`,
+              mutation: NEW_MATRIX_MUTATION,
               variables: {
                 title: this.createForm.title
               }
             }).then((data) => {
-              // Result
               // console.log(data.data)
               // if (data.data.createMatrix) this.$router.push('/matrix/' + data.data.createMatrix.id)
               return !!data.data.createMatrix
             }).catch((error) => {
-              // Error
               console.error(error)
               return false
             })

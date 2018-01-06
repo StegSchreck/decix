@@ -19,17 +19,11 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { ALL_CATEGORIES_QUERY, NEW_CATEGORY_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
-      category: gql`query {
-        category {
-          id
-          title
-          sorting
-          weight
-        }
-      }`
+      category: ALL_CATEGORIES_QUERY
     },
     data () {
       return {
@@ -47,22 +41,16 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$apollo.mutate({
-              mutation: gql`mutation ($title: String!, $sorting: Int!) {
-                  createCategory(title: $title, sorting: $sorting) {
-                    id
-                  }
-                }`,
+              mutation: NEW_CATEGORY_MUTATION,
               variables: {
                 title: this.createForm.title,
                 sorting: this.getHighestSorting() + 1
               }
             }).then((data) => {
-              // Result
-              console.log(data.data.createCategory)
+              // console.log(data.data.createCategory)
               if (data.data.createCategory) this.$router.push('/category/' + data.data.createCategory.id)
               else return false
             }).catch((error) => {
-              // Error
               console.error(error)
               return false
             })

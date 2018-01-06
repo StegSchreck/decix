@@ -11,16 +11,12 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import { CATEGORY_QUERY, DELETE_CATEGORY_MUTATION } from '../constants/graphql'
+
   export default {
     apollo: {
       category: {
-        query: gql`query Category($id: ID!){
-          category (id: $id){
-            id
-            title
-          }
-        }`,
+        query: CATEGORY_QUERY,
         variables () {
           return {
             id: this.itemId
@@ -37,19 +33,15 @@
     methods: {
       deleteItem () {
         this.$apollo.mutate({
-          mutation: gql`mutation ($id: ID!) {
-              deleteCategory(id: $id)
-            }`,
+          mutation: DELETE_CATEGORY_MUTATION,
           variables: {
             id: this.itemId
           }
         }).then((data) => {
-          // Result
-          console.log(data.data.deleteCategory)
+          // console.log(data.data.deleteCategory)
           if (data.data.deleteCategory) this.$router.push('/categories')
           else return false
         }).catch((error) => {
-          // Error
           console.error(error)
           return false
         })
