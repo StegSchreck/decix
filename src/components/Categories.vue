@@ -19,11 +19,27 @@
 </template>
 
 <script>
-  import { ALL_CATEGORIES_QUERY, NEW_CATEGORY_MUTATION } from '../constants/graphql'
+  import { ALL_CATEGORIES_QUERY, CHANGED_CATEGORY_SUBSCRIPTION, NEW_CATEGORY_MUTATION } from '../constants/graphql'
 
   export default {
+    beforeMount () {
+      this.$apollo.queries.category.refetch()
+    },
     apollo: {
-      category: ALL_CATEGORIES_QUERY
+      category: {
+        query: ALL_CATEGORIES_QUERY,
+        update (data) {
+          return data.category
+        },
+        subscribeToMore: [{
+          document: CHANGED_CATEGORY_SUBSCRIPTION,
+          updateQuery: (previousResult, { subscriptionData }) => {
+            return {
+              category: subscriptionData.data.categoryChange
+            }
+          }
+        }]
+      }
     },
     data () {
       return {

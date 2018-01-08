@@ -19,11 +19,27 @@
 </template>
 
 <script>
-  import { ALL_ALTERNATIVES_QUERY, NEW_ALTERNATIVE_MUTATION } from '../constants/graphql'
+  import { ALL_ALTERNATIVES_QUERY, CHANGED_ALTERNATIVE_SUBSCRIPTION, NEW_ALTERNATIVE_MUTATION } from '../constants/graphql'
 
   export default {
+    beforeMount () {
+      this.$apollo.queries.alternative.refetch()
+    },
     apollo: {
-      alternative: ALL_ALTERNATIVES_QUERY
+      alternative: {
+        query: ALL_ALTERNATIVES_QUERY,
+        update (data) {
+          return data.alternative
+        },
+        subscribeToMore: [{
+          document: CHANGED_ALTERNATIVE_SUBSCRIPTION,
+          updateQuery: (previousResult, { subscriptionData }) => {
+            return {
+              alternative: subscriptionData.data.alternativeChange
+            }
+          }
+        }]
+      }
     },
     data () {
       return {
