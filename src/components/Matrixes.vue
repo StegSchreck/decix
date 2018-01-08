@@ -19,9 +19,12 @@
 </template>
 
 <script>
-  import { ALL_MATRIXES_QUERY, NEW_MATRIX_SUBSCRIPTION, NEW_MATRIX_MUTATION } from '../constants/graphql'
+  import { ALL_MATRIXES_QUERY, CHANGED_MATRIX_SUBSCRIPTION, NEW_MATRIX_MUTATION } from '../constants/graphql'
 
   export default {
+    beforeMount () {
+      this.$apollo.queries.matrix.refetch()
+    },
     apollo: {
       matrix: {
         query: ALL_MATRIXES_QUERY,
@@ -29,20 +32,13 @@
           return data.matrix
         },
         subscribeToMore: [{
-          document: NEW_MATRIX_SUBSCRIPTION,
-          // Mutate the previous result
+          document: CHANGED_MATRIX_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
-            if (previousResult.matrix.find(item => item.id === subscriptionData.data.matrixAdded.id)) {
-              return previousResult
-            }
             return {
-              matrix: [
-                ...previousResult.matrix,
-                // Add the new matrix
-                subscriptionData.data.matrixAdded
-              ]
+              matrix: subscriptionData.data.matrixChange
             }
           }
+
         }]
       }
     },

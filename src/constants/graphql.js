@@ -21,9 +21,9 @@ export const DELETE_MATRIX_MUTATION = gql`
     deleteMatrix(id: $id)
   }`
 
-export const NEW_MATRIX_SUBSCRIPTION = gql`
+export const CHANGED_MATRIX_SUBSCRIPTION = gql`
   subscription matrix {
-    matrixAdded {
+    matrixChange {
       id
       title
     }
