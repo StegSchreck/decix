@@ -11,9 +11,13 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-for="item in matrix" :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
-        <router-link :to="{ name: 'Matrix', params: { id: item.id } }">{{ item.id }} - {{ item.title }}</router-link>
-      </div>
+
+      <el-collapse>
+        <el-collapse-item v-for="item in matrix" :key="item.id" :title="item.title" :name="item.id">
+          <div>ID: {{ item.id }}</div>
+          <router-link :to="{ name: 'Matrix', params: { id: item.id } }">go to matrix</router-link>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>
