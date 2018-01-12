@@ -3,7 +3,8 @@
     <h1>Alternative {{ $route.params.id }}</h1>
     <div class="alternative">
       <div v-for="item in alternative" :class="['alternative',{optimistic: item.id === -1}]" :title="item.id">
-        {{ item.id }} - {{ item.title }}
+        {{ item.id }} - {{ item.title }}<br>
+        {{ item.description }}
       </div>
       <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"/>
     </div>

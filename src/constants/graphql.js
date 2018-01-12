@@ -5,6 +5,7 @@ export const ALL_MATRIXES_QUERY = gql`
     matrix {
       id
       title
+      description
     }
   }`
 
@@ -13,6 +14,7 @@ export const MATRIX_QUERY = gql`
     matrix (id: $id){
       id
       title
+      description
       categories {
         id
         title
@@ -52,6 +54,7 @@ export const ALL_ALTERNATIVES_QUERY = gql`
     alternative {
       id
       title
+      description
       sorting
     }
   }`
@@ -61,6 +64,7 @@ export const ALTERNATIVE_QUERY = gql`
     alternative (id: $id){
       id
       title
+      description
       sorting
     }
   }`
@@ -82,6 +86,7 @@ export const CHANGED_ALTERNATIVE_SUBSCRIPTION = gql`
     alternativeChange {
       id
       title
+      description
       sorting
     }
   }`
@@ -91,6 +96,7 @@ export const ALL_CATEGORIES_QUERY = gql`
     category {
       id
       title
+      description
       sorting
       weight
     }
@@ -101,6 +107,7 @@ export const CATEGORY_QUERY = gql`
     category (id: $id){
       id
       title
+      description
       sorting
       weight
     }
@@ -123,6 +130,7 @@ export const CHANGED_CATEGORY_SUBSCRIPTION = gql`
     categoryChange {
       id
       title
+      description
       sorting
       weight
     }

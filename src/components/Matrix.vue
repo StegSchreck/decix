@@ -4,7 +4,8 @@
       <h1>Matrix {{ $route.params.id }}</h1>
       <div class="matrix" v-for="item in matrix">
         <div :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
-          {{ item.id }} - {{ item.title }}
+          {{ item.id }} - {{ item.title }}<br>
+          {{ item.description }}
         </div>
         <el-button type="danger" plain icon="el-icon-delete" @click="deleteMatrix"/>
       </div>
@@ -14,6 +15,7 @@
       <el-button type="primary" icon="el-icon-circle-plus" plain @click="categoryDialogVisible = true" style="width: 100%"/>
       <el-collapse v-if="matrix.categories">
         <el-collapse-item v-for="item in matrix.categories" :key="item.id" :title="item.title" :name="item.id">
+          <div>Description: {{ item.description }}</div>
           <div>Sorting: {{ item.sorting }}</div>
           <div>Weight: {{ item.weight }}</div>
         </el-collapse-item>
@@ -31,6 +33,7 @@
       <el-button type="primary" icon="el-icon-circle-plus" plain @click="alternativeDialogVisible = true" style="width: 100%"/>
       <el-collapse v-if="matrix.alternatives">
         <el-collapse-item v-for="item in matrix.alternatives" :key="item.id" :title="item.title" :name="item.id">
+          <div>Description: {{ item.description }}</div>
           <div>Sorting: {{ item.sorting }}</div>
         </el-collapse-item>
       </el-collapse>

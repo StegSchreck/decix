@@ -15,6 +15,7 @@
       <el-collapse>
         <el-collapse-item v-for="item in matrix" :key="item.id" :title="item.title" :name="item.id">
           <div>ID: {{ item.id }}</div>
+          <div>Description: {{ item.description }}</div>
           <router-link :to="{ name: 'Matrix', params: { id: item.id } }">go to matrix</router-link>
         </el-collapse-item>
       </el-collapse>
