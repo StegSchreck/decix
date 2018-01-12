@@ -34,8 +34,12 @@
   }
   #content {
     margin-top: 20px;
+    padding: 0;
+  }
+  #content .section {
+    margin-top: 10px;
     background-color: white;
-    padding: 5px 10px;
+    padding: 5px 10px 25px 10px;
   }
   a {
     color: #41B883;

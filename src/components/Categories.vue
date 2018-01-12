@@ -1,5 +1,5 @@
 <template>
-  <div id="categories">
+  <div id="categories" class="section">
     <h1>Existing Categories</h1>
     <div class="categories">
       <div id="CreateForm">

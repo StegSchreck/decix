@@ -1,5 +1,5 @@
 <template>
-  <div id="category">
+  <div id="category" class="section">
     <h1>Category {{ $route.params.id }}</h1>
     <div class="category">
       <div v-for="item in category" :class="['category',{optimistic: item.id === -1}]" :title="item.id">

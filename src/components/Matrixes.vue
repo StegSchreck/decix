@@ -1,5 +1,5 @@
 <template>
-  <div id="matrixes">
+  <div id="matrixes" class="section">
     <h1>Existing Matrixes</h1>
     <div class="matrixes">
       <div id="CreateForm">

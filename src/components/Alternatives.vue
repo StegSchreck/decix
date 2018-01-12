@@ -1,5 +1,5 @@
 <template>
-  <div id="alternatives">
+  <div id="alternatives" class="section">
     <h1>Existing Alternatives</h1>
     <div class="alternatives">
       <div id="CreateForm">
