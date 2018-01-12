@@ -13,6 +13,17 @@ export const MATRIX_QUERY = gql`
     matrix (id: $id){
       id
       title
+      categories {
+        id
+        title
+        sorting
+        weight
+      }
+      alternatives {
+        id
+        title
+        sorting
+      }
     }
   }`
 
