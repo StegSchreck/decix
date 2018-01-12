@@ -6,7 +6,7 @@
         <el-form :model="createForm" ref="createForm" label-width="40px" status-icon>
           <el-form-item prop="title" label="Title">
             <el-input v-model="createForm.title" autofocus>
-              <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitForm('createForm')"></el-button>
+              <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitForm('createForm')"/>
             </el-input>
           </el-form-item>
         </el-form>

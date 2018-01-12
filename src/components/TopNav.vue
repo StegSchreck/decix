@@ -15,8 +15,6 @@
       return {
         activeIndex: this.$route.path.substring(1)
       }
-    },
-    methods: {
     }
   }
 </script>

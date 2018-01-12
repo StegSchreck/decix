@@ -1,10 +1,10 @@
 <template>
   <el-container id="app">
     <el-header id="header">
-      <topnav></topnav>
+      <topnav/>
     </el-header>
     <el-main id="content">
-      <router-view></router-view>
+      <router-view/>
     </el-main>
     </el-container>
 </template>

@@ -5,7 +5,7 @@
       <div v-for="item in category" :class="['category',{optimistic: item.id === -1}]" :title="item.id">
         {{ item.id }} - {{ item.title }}
       </div>
-      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"></el-button>
+      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"/>
     </div>
   </div>
 </template>
