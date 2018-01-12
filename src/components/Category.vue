@@ -6,7 +6,7 @@
         {{ item.id }} - {{ item.title }}<br>
         {{ item.description }}
       </div>
-      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"/>
+      <el-button type="danger" plain icon="el-icon-delete" @click="deleteCategory"/>
     </div>
   </div>
 </template>
@@ -32,14 +32,13 @@
       }
     },
     methods: {
-      deleteItem () {
+      deleteCategory () {
         this.$apollo.mutate({
           mutation: DELETE_CATEGORY_MUTATION,
           variables: {
             id: this.itemId
           }
         }).then((data) => {
-          // console.log(data.data.deleteCategory)
           if (data.data.deleteCategory) this.$router.push('/categories')
           else return false
         }).catch((error) => {

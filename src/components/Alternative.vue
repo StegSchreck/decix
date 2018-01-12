@@ -6,7 +6,7 @@
         {{ item.id }} - {{ item.title }}<br>
         {{ item.description }}
       </div>
-      <el-button type="danger" plain icon="el-icon-delete" @click="deleteItem"/>
+      <el-button type="danger" plain icon="el-icon-delete" @click="deleteAlternative"/>
     </div>
   </div>
 </template>
@@ -32,14 +32,13 @@
       }
     },
     methods: {
-      deleteItem () {
+      deleteAlternative () {
         this.$apollo.mutate({
           mutation: DELETE_ALTERNATIVE_MUTATION,
           variables: {
             id: this.itemId
           }
         }).then((data) => {
-          // console.log(data.data.deleteAlternative)
           if (data.data.deleteAlternative) this.$router.push('/alternatives')
           else return false
         }).catch((error) => {

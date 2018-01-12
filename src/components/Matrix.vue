@@ -104,7 +104,6 @@
             id: this.itemId
           }
         }).then((data) => {
-          // console.log(data.data.deleteMatrix)
           if (data.data.deleteMatrix) this.$router.push('/matrixes')
           else return false
         }).catch((error) => {
