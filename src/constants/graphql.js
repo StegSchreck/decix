@@ -66,6 +66,10 @@ export const ALTERNATIVE_QUERY = gql`
       title
       description
       sorting
+      matrix {
+        id
+        title
+      }
     }
   }`
 
@@ -110,6 +114,10 @@ export const CATEGORY_QUERY = gql`
       description
       sorting
       weight
+      matrix {
+        id
+        title
+      }
     }
   }`
 

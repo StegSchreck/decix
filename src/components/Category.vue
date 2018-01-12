@@ -4,7 +4,8 @@
     <div class="category">
       <div v-for="item in category" :class="['category',{optimistic: item.id === -1}]" :title="item.id">
         {{ item.id }} - {{ item.title }}<br>
-        {{ item.description }}
+        {{ item.description }}<br>
+        [<router-link :to="{ name: 'Matrix', params: { id: item.matrix.id } }">matrix {{ item.matrix.title }}</router-link>]
       </div>
       <el-button type="danger" plain icon="el-icon-delete" @click="deleteCategory"/>
     </div>
