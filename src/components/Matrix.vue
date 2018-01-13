@@ -39,7 +39,7 @@
           <el-collapse-item v-for="alternative in item.alternatives" :key="alternative.id" :title="alternative.title" :name="alternative.id">
             <div>Description: {{ alternative.description }}</div>
             <div>Sorting: {{ alternative.sorting }}</div>
-            [<router-link :to="{ name: 'Alternative', params: { id: alternative.id } }">category {{ alternative.id }}</router-link>]
+            [<router-link :to="{ name: 'Alternative', params: { id: alternative.id } }">alternative {{ alternative.id }}</router-link>]
           </el-collapse-item>
         </el-collapse>
         <el-alert
