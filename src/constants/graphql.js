@@ -122,8 +122,8 @@ export const CATEGORY_QUERY = gql`
   }`
 
 export const NEW_CATEGORY_MUTATION = gql`
-  mutation ($title: String!, $sorting: Int!) {
-    createCategory(title: $title, sorting: $sorting) {
+  mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
+    createCategory(title: $title, sorting: $sorting, matrixID: $matrixID) {
       id
     }
   }`

@@ -63,7 +63,6 @@
                 sorting: this.getHighestSorting() + 1
               }
             }).then((data) => {
-              // console.log(data.data.createCategory)
               if (data.data.createCategory) this.$router.push('/category/' + data.data.createCategory.id)
               else return false
             }).catch((error) => {

@@ -63,7 +63,6 @@
                 sorting: this.getHighestSorting() + 1
               }
             }).then((data) => {
-              // console.log(data.data)
               if (data.data.createAlternative) this.$router.push('/alternative/' + data.data.createAlternative.id)
               else return false
             }).catch((error) => {

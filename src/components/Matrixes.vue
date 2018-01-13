@@ -65,7 +65,6 @@
                 title: this.createForm.title
               }
             }).then((data) => {
-              // console.log(data.data)
               // if (data.data.createMatrix) this.$router.push('/matrix/' + data.data.createMatrix.id)
               return !!data.data.createMatrix
             }).catch((error) => {
