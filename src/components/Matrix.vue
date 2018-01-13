@@ -183,7 +183,8 @@
           mutation: NEW_ALTERNATIVE_MUTATION,
           variables: {
             title: this.createAlternativeForm.title,
-            sorting: this.getHighestAlternativeSorting() + 1
+            sorting: this.getHighestAlternativeSorting() + 1,
+            matrixID: this.matrix[0].id
           }
         }).then((data) => {
           if (data.data.createAlternative) this.alternativeDialogVisible = false // this.$router.push('/alternative/' + data.data.createAlternative.id)

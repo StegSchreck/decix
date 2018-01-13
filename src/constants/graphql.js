@@ -74,8 +74,8 @@ export const ALTERNATIVE_QUERY = gql`
   }`
 
 export const NEW_ALTERNATIVE_MUTATION = gql`
-  mutation ($title: String!, $sorting: Int!) {
-    createAlternative(title: $title, sorting: $sorting) {
+  mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
+    createAlternative(title: $title, sorting: $sorting, matrixID: $matrixID) {
       id
     }
   }`
