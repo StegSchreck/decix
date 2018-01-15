@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { ALL_CATEGORIES_QUERY, CHANGED_CATEGORY_SUBSCRIPTION, NEW_CATEGORY_MUTATION } from '../constants/graphql'
+  import { ALL_CATEGORIES_QUERY, CHANGED_CATEGORIES_SUBSCRIPTION, NEW_CATEGORY_MUTATION } from '../constants/graphql'
 
   export default {
     beforeMount () {
@@ -32,7 +32,7 @@
           return data.category
         },
         subscribeToMore: [{
-          document: CHANGED_CATEGORY_SUBSCRIPTION,
+          document: CHANGED_CATEGORIES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
               category: subscriptionData.data.categoryChange

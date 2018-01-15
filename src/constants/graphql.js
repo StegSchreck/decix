@@ -10,7 +10,7 @@ export const ALL_MATRIXES_QUERY = gql`
   }`
 
 export const MATRIX_QUERY = gql`
-  query Matrix($id: ID!){
+  query Matrix ($id: ID!){
     matrix (id: $id){
       id
       title
@@ -31,17 +31,17 @@ export const MATRIX_QUERY = gql`
 
 export const DELETE_MATRIX_MUTATION = gql`
   mutation ($id: ID!) {
-    deleteMatrix(id: $id)
+    deleteMatrix (id: $id)
   }`
 
 export const NEW_MATRIX_MUTATION = gql`
   mutation ($title: String!) {
-    createMatrix(title: $title) {
+    createMatrix (title: $title) {
       id
     }
   }`
 
-export const CHANGED_MATRIX_SUBSCRIPTION = gql`
+export const CHANGED_MATRIXES_SUBSCRIPTION = gql`
   subscription matrix {
     matrixChange {
       id
@@ -60,7 +60,7 @@ export const ALL_ALTERNATIVES_QUERY = gql`
   }`
 
 export const ALTERNATIVE_QUERY = gql`
-  query Alternative($id: ID!){
+  query Alternative ($id: ID!){
     alternative (id: $id){
       id
       title
@@ -75,17 +75,17 @@ export const ALTERNATIVE_QUERY = gql`
 
 export const NEW_ALTERNATIVE_MUTATION = gql`
   mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
-    createAlternative(title: $title, sorting: $sorting, matrixID: $matrixID) {
+    createAlternative (title: $title, sorting: $sorting, matrixID: $matrixID) {
       id
     }
   }`
 
 export const DELETE_ALTERNATIVE_MUTATION = gql`
   mutation ($id: ID!) {
-    deleteAlternative(id: $id)
+    deleteAlternative (id: $id)
   }`
 
-export const CHANGED_ALTERNATIVE_SUBSCRIPTION = gql`
+export const CHANGED_ALTERNATIVES_SUBSCRIPTION = gql`
   subscription alternative {
     alternativeChange {
       id
@@ -107,7 +107,7 @@ export const ALL_CATEGORIES_QUERY = gql`
   }`
 
 export const CATEGORY_QUERY = gql`
-  query Category($id: ID!){
+  query Category ($id: ID!){
     category (id: $id){
       id
       title
@@ -123,17 +123,17 @@ export const CATEGORY_QUERY = gql`
 
 export const NEW_CATEGORY_MUTATION = gql`
   mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
-    createCategory(title: $title, sorting: $sorting, matrixID: $matrixID) {
+    createCategory (title: $title, sorting: $sorting, matrixID: $matrixID) {
       id
     }
   }`
 
 export const DELETE_CATEGORY_MUTATION = gql`
   mutation ($id: ID!) {
-    deleteCategory(id: $id)
+    deleteCategory (id: $id)
   }`
 
-export const CHANGED_CATEGORY_SUBSCRIPTION = gql`
+export const CHANGED_CATEGORIES_SUBSCRIPTION = gql`
   subscription category {
     categoryChange {
       id

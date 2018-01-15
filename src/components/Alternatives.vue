@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { ALL_ALTERNATIVES_QUERY, CHANGED_ALTERNATIVE_SUBSCRIPTION, NEW_ALTERNATIVE_MUTATION } from '../constants/graphql'
+  import { ALL_ALTERNATIVES_QUERY, CHANGED_ALTERNATIVES_SUBSCRIPTION, NEW_ALTERNATIVE_MUTATION } from '../constants/graphql'
 
   export default {
     beforeMount () {
@@ -32,7 +32,7 @@
           return data.alternative
         },
         subscribeToMore: [{
-          document: CHANGED_ALTERNATIVE_SUBSCRIPTION,
+          document: CHANGED_ALTERNATIVES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
               alternative: subscriptionData.data.alternativeChange

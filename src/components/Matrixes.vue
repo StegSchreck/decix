@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import { ALL_MATRIXES_QUERY, CHANGED_MATRIX_SUBSCRIPTION, NEW_MATRIX_MUTATION } from '../constants/graphql'
+  import { ALL_MATRIXES_QUERY, CHANGED_MATRIXES_SUBSCRIPTION, NEW_MATRIX_MUTATION } from '../constants/graphql'
 
   export default {
     beforeMount () {
@@ -37,13 +37,12 @@
           return data.matrix
         },
         subscribeToMore: [{
-          document: CHANGED_MATRIX_SUBSCRIPTION,
+          document: CHANGED_MATRIXES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
               matrix: subscriptionData.data.matrixChange
             }
           }
-
         }]
       }
     },
