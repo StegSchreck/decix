@@ -2,9 +2,8 @@
   <div id="matrix">
     <div class="matrix" v-for="item in matrix">
       <div class="section">
-        <h1>Matrix {{ $route.params.id }}</h1>
+        <h1>Matrix {{ item.title }}</h1>
           <div :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
-            {{ item.id }} - {{ item.title }}<br>
             {{ item.description }}
           </div>
           <el-button-group>
@@ -13,42 +12,47 @@
             <el-button type="danger" plain icon="el-icon-delete" @click="deleteMatrix"/>
           </el-button-group>
       </div>
+
       <div class="section">
-        <h1>Assigned categories</h1>
-        <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="categoryDialogVisible = true" style="width: 100%"/>
-        <el-collapse v-if="item.categories.length > 0">
-          <el-collapse-item v-for="category in item.categories" :key="category.id" :title="category.title" :name="category.id">
-            <div>Description: {{ category.description }}</div>
-            <div>Sorting: {{ category.sorting }}</div>
-            <div>Weight: {{ category.weight }}</div>
-            [<router-link :to="{ name: 'Category', params: { id: category.id } }">category {{ category.id }}</router-link>]
-          </el-collapse-item>
-        </el-collapse>
-        <el-alert
-          title="No category assigned yet."
-          type="info"
-          :closable="false"
-          center
-          show-icon
-          v-else/>
-      </div>
-      <div class="section">
-        <h2>Assigned alternatives</h2>
-        <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="alternativeDialogVisible = true" style="width: 100%"/>
-        <el-collapse v-if="item.alternatives.length > 0">
-          <el-collapse-item v-for="alternative in item.alternatives" :key="alternative.id" :title="alternative.title" :name="alternative.id">
-            <div>Description: {{ alternative.description }}</div>
-            <div>Sorting: {{ alternative.sorting }}</div>
-            [<router-link :to="{ name: 'Alternative', params: { id: alternative.id } }">alternative {{ alternative.id }}</router-link>]
-          </el-collapse-item>
-        </el-collapse>
-        <el-alert
-          title="No alternative assigned yet."
-          type="info"
-          :closable="false"
-          center
-          show-icon
-          v-else/>
+        <el-row>
+          <el-col :span="12" style="padding-right:10px;">
+            <h1>Assigned categories</h1>
+            <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="categoryDialogVisible = true" style="width: 100%"/>
+            <el-collapse v-if="item.categories.length > 0">
+              <el-collapse-item v-for="category in item.categories" :key="category.id" :title="category.title" :name="category.id">
+                <div>Description: {{ category.description }}</div>
+                <div>Sorting: {{ category.sorting }}</div>
+                <div>Weight: {{ category.weight }}</div>
+                [<router-link :to="{ name: 'Category', params: { id: category.id } }">category {{ category.id }}</router-link>]
+              </el-collapse-item>
+            </el-collapse>
+            <el-alert
+              title="No category assigned yet."
+              type="info"
+              :closable="false"
+              center
+              show-icon
+              v-else/>
+          </el-col>
+          <el-col :span="12" style="padding-left:10px;">
+            <h2>Assigned alternatives</h2>
+            <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="alternativeDialogVisible = true" style="width: 100%"/>
+            <el-collapse v-if="item.alternatives.length > 0">
+              <el-collapse-item v-for="alternative in item.alternatives" :key="alternative.id" :title="alternative.title" :name="alternative.id">
+                <div>Description: {{ alternative.description }}</div>
+                <div>Sorting: {{ alternative.sorting }}</div>
+                [<router-link :to="{ name: 'Alternative', params: { id: alternative.id } }">alternative {{ alternative.id }}</router-link>]
+              </el-collapse-item>
+            </el-collapse>
+            <el-alert
+              title="No alternative assigned yet."
+              type="info"
+              :closable="false"
+              center
+              show-icon
+              v-else/>
+          </el-col>
+        </el-row>
       </div>
 
 
