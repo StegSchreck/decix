@@ -35,7 +35,7 @@
           document: CHANGED_CATEGORIES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
-              category: subscriptionData.data.categoryChange
+              category: subscriptionData.data.categoriesChange
             }
           }
         }]

@@ -35,7 +35,7 @@
           document: CHANGED_ALTERNATIVES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
-              alternative: subscriptionData.data.alternativeChange
+              alternative: subscriptionData.data.alternativesChange
             }
           }
         }]

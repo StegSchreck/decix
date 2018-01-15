@@ -59,7 +59,7 @@
         <div id="CreateCategoryForm">
           <el-form :model="createCategoryForm" ref="createCategoryForm" label-width="40px" status-icon>
             <el-form-item prop="title" label="Title">
-              <el-input v-model="createCategoryForm.title" autofocus>
+              <el-input v-model="createCategoryForm.title" :autofocus="categoryDialogVisible">
                 <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitCategoryForm"/>
               </el-input>
             </el-form-item>
@@ -76,7 +76,7 @@
         <div id="CreateAlternativeForm">
           <el-form :model="createAlternativeForm" ref="createAlternativeForm" label-width="40px" status-icon>
             <el-form-item prop="title" label="Title">
-              <el-input v-model="createAlternativeForm.title" autofocus>
+              <el-input v-model="createAlternativeForm.title"  :autofocus="alternativeDialogVisible">
                 <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitAlternativeForm"/>
               </el-input>
             </el-form-item>
@@ -95,7 +95,8 @@
     MATRIX_QUERY,
     DELETE_MATRIX_MUTATION,
     NEW_CATEGORY_MUTATION,
-    NEW_ALTERNATIVE_MUTATION
+    NEW_ALTERNATIVE_MUTATION,
+    CHANGED_MATRIX_SUBSCRIPTION
   } from '../constants/graphql'
 
   export default {
@@ -112,7 +113,20 @@
           return {
             id: this.itemId
           }
-        }
+        },
+        subscribeToMore: [{
+          document: CHANGED_MATRIX_SUBSCRIPTION,
+          updateQuery: (previousResult, { subscriptionData }) => {
+            return {
+              matrix: subscriptionData.data.matrixChange
+            }
+          },
+          variables () {
+            return {
+              id: this.itemId
+            }
+          }
+        }]
       }
     },
     data () {

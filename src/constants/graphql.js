@@ -43,9 +43,30 @@ export const NEW_MATRIX_MUTATION = gql`
 
 export const CHANGED_MATRIXES_SUBSCRIPTION = gql`
   subscription matrix {
-    matrixChange {
+    matrixesChange {
       id
       title
+      description
+    }
+  }`
+
+export const CHANGED_MATRIX_SUBSCRIPTION = gql`
+  subscription matrix ($id: ID!) {
+    matrixChange (id: $id) {
+      id
+      title
+      description
+      categories {
+        id
+        title
+        sorting
+        weight
+      }
+      alternatives {
+        id
+        title
+        sorting
+      }
     }
   }`
 
@@ -87,7 +108,7 @@ export const DELETE_ALTERNATIVE_MUTATION = gql`
 
 export const CHANGED_ALTERNATIVES_SUBSCRIPTION = gql`
   subscription alternative {
-    alternativeChange {
+    alternativesChange {
       id
       title
       description
@@ -135,7 +156,7 @@ export const DELETE_CATEGORY_MUTATION = gql`
 
 export const CHANGED_CATEGORIES_SUBSCRIPTION = gql`
   subscription category {
-    categoryChange {
+    categoriesChange {
       id
       title
       description

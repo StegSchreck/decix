@@ -40,7 +40,7 @@
           document: CHANGED_MATRIXES_SUBSCRIPTION,
           updateQuery: (previousResult, { subscriptionData }) => {
             return {
-              matrix: subscriptionData.data.matrixChange
+              matrix: subscriptionData.data.matrixesChange
             }
           }
         }]
