@@ -80,4 +80,7 @@
 </script>
 
 <style>
+  .el-collapse-item__header {
+    padding-left: 21px;
+  }
 </style>

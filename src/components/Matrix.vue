@@ -229,4 +229,7 @@
     font-weight: bold;
     text-align: left;
   }
+  .el-collapse-item__header {
+    padding-left: 21px;
+  }
 </style>
