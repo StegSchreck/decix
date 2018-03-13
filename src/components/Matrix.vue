@@ -57,7 +57,7 @@
 
       <div class="section">
         <h2>Decision matrix</h2>
-        <el-table :data="item.alternatives" :default-sort = "{prop: 'sorting', order: 'ascending'}" stripe style="width: 100%">
+        <el-table :data="item.alternatives" :default-sort = "{ prop: 'sorting', order: 'ascending' }" stripe style="width: 100%">
           <el-table-column label="Alternative" prop="title" sortable fixed/>
           <el-table-column v-for="category in item.categories" :key="category.id" :label="category.title" :prop="category.id"/>
         </el-table>
