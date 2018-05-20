@@ -2,7 +2,7 @@
   <div id="matrix">
     <div class="matrix" v-for="item in matrix">
       <div class="section">
-        <h1>Matrix {{ item.title }}</h1>
+        <h1>Matrix <span>{{ item.title }}</span></h1>
           <div :class="['matrix',{optimistic: item.id === -1}]" :title="item.id">
             {{ item.description }}
           </div>
@@ -39,8 +39,8 @@
             <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="alternativeDialogVisible = true" style="width: 100%"/>
             <el-collapse v-if="item.alternatives.length > 0">
               <el-collapse-item v-for="alternative in item.alternatives" :key="alternative.id" :title="alternative.title" :name="alternative.id">
-                <div>Description: {{ alternative.description }}</div>
-                <div>Sorting: {{ alternative.sorting }}</div>
+                <div><i class="el-icon-tickets"></i> Description: {{ alternative.description }}</div>
+                <div><i class="el-icon-sort"></i> Sorting: {{ alternative.sorting }}</div>
                 [<router-link :to="{ name: 'Alternative', params: { id: alternative.id } }">alternative {{ alternative.id }}</router-link>]
               </el-collapse-item>
             </el-collapse>
@@ -93,16 +93,20 @@
         :visible.sync="alternativeDialogVisible"
         width="50%">
         <div id="CreateAlternativeForm">
-          <el-form :model="createAlternativeForm" ref="createAlternativeForm" label-width="40px" status-icon>
+          <el-form :model="createAlternativeForm" ref="createAlternativeForm" label-width="80px" status-icon>
             <el-form-item prop="title" label="Title">
               <el-input v-model="createAlternativeForm.title"  :autofocus="alternativeDialogVisible">
-                <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitAlternativeForm"/>
+                <!--<el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitAlternativeForm"/>-->
               </el-input>
+            </el-form-item>
+            <el-form-item prop="decription" label="Description">
+              <el-input v-model="createAlternativeForm.description" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="alternativeDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline"  @click="submitAlternativeForm">Create</el-button>
+          <el-button type="info" icon="el-icon-circle-close-outline"  @click="alternativeDialogVisible = false">Cancel</el-button>
         </span>
       </el-dialog>
     </div>
@@ -160,7 +164,8 @@
           description: ''
         },
         createAlternativeForm: {
-          title: ''
+          title: '',
+          description: ''
         }
       }
     },
@@ -202,8 +207,8 @@
           mutation: NEW_CATEGORY_MUTATION,
           variables: {
             title: this.createCategoryForm.title,
-            weight: this.createCategoryForm.weight,
             description: this.createCategoryForm.description,
+            weight: this.createCategoryForm.weight,
             sorting: this.getHighestCategorySorting() + 1, // always add at bottom
             matrixID: this.matrix[0].id
           }
@@ -220,6 +225,7 @@
           mutation: NEW_ALTERNATIVE_MUTATION,
           variables: {
             title: this.createAlternativeForm.title,
+            description: this.createAlternativeForm.description,
             sorting: this.getHighestAlternativeSorting() + 1, // always add at bottom
             matrixID: this.matrix[0].id
           }
@@ -236,6 +242,9 @@
 </script>
 
 <style>
+  h1 span {
+    font-family: monospace;
+  }
   .el-table .el-table_1_column_1 .cell {
     font-weight: bold;
     text-align: left;

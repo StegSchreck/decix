@@ -61,12 +61,14 @@ export const CHANGED_MATRIX_SUBSCRIPTION = gql`
       categories {
         id
         title
+        description
         sorting
         weight
       }
       alternatives {
         id
         title
+        description
         sorting
       }
     }
@@ -97,8 +99,8 @@ export const ALTERNATIVE_QUERY = gql`
   }`
 
 export const NEW_ALTERNATIVE_MUTATION = gql`
-  mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
-    createAlternative (title: $title, sorting: $sorting, matrixID: $matrixID) {
+  mutation ($title: String!, $description: String!, $sorting: Int!, $matrixID: ID!) {
+    createAlternative (title: $title, description: $description, sorting: $sorting, matrixID: $matrixID) {
       id
     }
   }`
