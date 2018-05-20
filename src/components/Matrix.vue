@@ -57,9 +57,24 @@
 
       <div class="section">
         <h2>Decision matrix</h2>
-        <el-table :data="item.alternatives" :default-sort = "{ prop: 'sorting', order: 'ascending' }" stripe style="width: 100%" v-if="item.alternatives.length > 0">
-          <el-table-column label="Alternative" prop="title" sortable fixed/>
-          <el-table-column v-for="category in item.categories" :key="category.id" :label="category.title" :prop="category.id"/>
+        <el-button type="primary" plain icon="el-icon-edit-outline" @click="entryDialogVisible = true">Add entry</el-button>
+        <el-table :data="tableData" :default-sort = "{ prop: 'sorting', order: 'ascending' }" border stripe style="width: 100%" v-if="item.alternatives.length > 0">
+          <el-table-column label="Alternative" prop="alternative" sortable fixed/>
+          <el-table-column v-for="category in item.categories" :key="category.id" :label="category.title" :prop="category.title"/>
+          <el-table-column
+            label="Operations">
+            <template slot-scope="scope">
+              <el-button
+                size="mini">
+                <!--@click="handleEdit(scope.$index, scope.row)">-->
+                Edit</el-button>
+              <el-button
+                size="mini"
+                type="danger">
+                <!--@click="handleDelete(scope.$index, scope.row)">-->
+              Delete</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
 
@@ -84,8 +99,8 @@
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" icon="el-icon-circle-plus-outline"  @click="submitCategoryForm">Create</el-button>
-          <el-button type="info" icon="el-icon-circle-close-outline"  @click="categoryDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="submitCategoryForm">Create</el-button>
+          <el-button type="info" icon="el-icon-circle-close-outline" @click="categoryDialogVisible = false">Cancel</el-button>
         </span>
       </el-dialog>
       <el-dialog
@@ -95,7 +110,7 @@
         <div id="CreateAlternativeForm">
           <el-form :model="createAlternativeForm" ref="createAlternativeForm" label-width="80px" status-icon>
             <el-form-item prop="title" label="Title">
-              <el-input v-model="createAlternativeForm.title"  :autofocus="alternativeDialogVisible">
+              <el-input v-model="createAlternativeForm.title" :autofocus="alternativeDialogVisible">
                 <!--<el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitAlternativeForm"/>-->
               </el-input>
             </el-form-item>
@@ -105,8 +120,43 @@
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" icon="el-icon-circle-plus-outline"  @click="submitAlternativeForm">Create</el-button>
-          <el-button type="info" icon="el-icon-circle-close-outline"  @click="alternativeDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="submitAlternativeForm">Create</el-button>
+          <el-button type="info" icon="el-icon-circle-close-outline" @click="alternativeDialogVisible = false">Cancel</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog
+        title="Create new entry"
+        :visible.sync="entryDialogVisible"
+        width="50%">
+        <div id="CreateEntryForm">
+          <el-form :model="createEntryForm" ref="createEntryForm" label-width="80px" status-icon>
+            <el-form-item prop="value" label="Value">
+              <el-input v-model="createEntryForm.value" :autofocus="entryDialogVisible">
+                <!--<el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitAlternativeForm"/>-->
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="comment" label="Comment">
+              <el-input v-model="createEntryForm.comment" type="textarea" :rows="3"></el-input>
+            </el-form-item>
+            <el-select v-model="createEntryForm.alternativeID" filterable auto-complete placeholder="Select Alternative">
+              <el-option v-for="alternative in item.alternatives"
+                :key="alternative.id"
+                :label="alternative.title"
+                :value="alternative.id">
+              </el-option>
+            </el-select><br/>
+            <el-select v-model="createEntryForm.categoryID" filterable auto-complete placeholder="Select Category">
+              <el-option v-for="category in item.categories"
+                :key="category.id"
+                :label="category.title"
+                :value="category.id">
+              </el-option>
+            </el-select>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="submitEntryForm">Create</el-button>
+          <el-button type="info" icon="el-icon-circle-close-outline" @click="entryDialogVisible = false">Cancel</el-button>
         </span>
       </el-dialog>
     </div>
@@ -119,12 +169,14 @@
     DELETE_MATRIX_MUTATION,
     NEW_CATEGORY_MUTATION,
     NEW_ALTERNATIVE_MUTATION,
+    NEW_ENTRY_MUTATION,
     CHANGED_MATRIX_SUBSCRIPTION
   } from '../constants/graphql'
 
   export default {
     beforeMount () {
       this.$apollo.queries.matrix.refetch()
+      this.collectTableData()
     },
     apollo: {
       matrix: {
@@ -158,6 +210,7 @@
         itemId: this.$route.params.id,
         categoryDialogVisible: false,
         alternativeDialogVisible: false,
+        entryDialogVisible: false,
         createCategoryForm: {
           title: '',
           weight: 0,
@@ -166,7 +219,14 @@
         createAlternativeForm: {
           title: '',
           description: ''
-        }
+        },
+        createEntryForm: {
+          value: '',
+          comment: '',
+          alternativeID: '',
+          categoryID: ''
+        },
+        tableData: []
       }
     },
     methods: {
@@ -236,6 +296,53 @@
           console.error(error)
           return false
         })
+      },
+      submitEntryForm () {
+        this.$apollo.mutate({
+          mutation: NEW_ENTRY_MUTATION,
+          variables: {
+            value: this.createEntryForm.value,
+            comment: this.createEntryForm.comment,
+            alternativeID: this.createEntryForm.alternativeID,
+            categoryID: this.createEntryForm.categoryID
+          }
+        }).then((data) => {
+          if (data.data.createEntry) this.entryDialogVisible = false
+          else return false
+        }).catch((error) => {
+          console.error(error)
+          return false
+        })
+      },
+      collectTableData () {
+        let matrix = {}
+        this.$apollo.query({
+          query: MATRIX_QUERY,
+          variables: {
+            id: this.itemId
+          }
+        }).then((data) => {
+          matrix = data.data.matrix[0]
+          if (matrix.categories !== undefined && matrix.categories.length > 0 &&
+            matrix.alternatives !== undefined && matrix.alternatives.length > 0) {
+            let populatedAlternative = {}
+            matrix.categories.forEach(function (category) {
+              matrix.alternatives.forEach(function (alternative) {
+                populatedAlternative['alternative'] = alternative.title
+                let entry = alternative.entries.filter(entry => entry.category.id === category.id)[0]
+                if (entry !== undefined) {
+                  populatedAlternative[category.title] = entry.value
+                } else {
+                  populatedAlternative[category.title] = 'bla'
+                }
+              })
+            })
+            this.tableData.push(populatedAlternative)
+          }
+        }).catch((error) => {
+          console.error(error)
+          return false
+        })
       }
     }
   }
@@ -245,7 +352,11 @@
   h1 span {
     font-family: monospace;
   }
-  .el-table .el-table_1_column_1 .cell {
+  .el-table .cell {
+    text-align: left;
+  }
+  .el-table .el-table_1_column_1 .cell,
+  .el-table tr td:first-of-type {
     font-weight: bold;
     text-align: left;
   }

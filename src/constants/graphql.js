@@ -27,6 +27,9 @@ export const MATRIX_QUERY = gql`
         title
         description
         sorting
+        entries {
+          value
+        }
       }
     }
   }`
@@ -166,5 +169,83 @@ export const CHANGED_CATEGORIES_SUBSCRIPTION = gql`
       description
       sorting
       weight
+    }
+  }`
+
+export const ALL_ENTRIES_QUERY = gql`
+  query {
+    entry {
+      id
+      value
+      comment
+      categories {
+        id
+        title
+        description
+        sorting
+        weight
+      }
+      alternatives {
+        id
+        title
+        description
+        sorting
+      }
+    }
+  }`
+
+export const ENTRY_QUERY = gql`
+  query Entry ($id: ID!){
+    entry (id: $id){
+      id
+      value
+      comment
+      categories {
+        id
+        title
+        description
+        sorting
+        weight
+      }
+      alternatives {
+        id
+        title
+        description
+        sorting
+      }
+    }
+  }`
+
+export const NEW_ENTRY_MUTATION = gql`
+  mutation ($value: String!, $comment: String!, $alternativeID: ID!, $categoryID: ID!) {
+    createEntry (value: $value, comment: $comment, alternativeID: $alternativeID, categoryID: $categoryID) {
+      id
+    }
+  }`
+
+export const DELETE_ENTRY_MUTATION = gql`
+  mutation ($id: ID!) {
+    deleteEntry (id: $id)
+  }`
+
+export const CHANGED_ENTRIES_SUBSCRIPTION = gql`
+  subscription entry {
+    entriesChange {
+      id
+      value
+      comment
+      categories {
+        id
+        title
+        description
+        sorting
+        weight
+      }
+      alternatives {
+        id
+        title
+        description
+        sorting
+      }
     }
   }`
