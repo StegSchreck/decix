@@ -18,12 +18,14 @@ export const MATRIX_QUERY = gql`
       categories {
         id
         title
+        description
         sorting
         weight
       }
       alternatives {
         id
         title
+        description
         sorting
       }
     }
@@ -143,8 +145,8 @@ export const CATEGORY_QUERY = gql`
   }`
 
 export const NEW_CATEGORY_MUTATION = gql`
-  mutation ($title: String!, $sorting: Int!, $matrixID: ID!) {
-    createCategory (title: $title, sorting: $sorting, matrixID: $matrixID) {
+  mutation ($title: String!, $description: String!, $sorting: Int!, $weight: Int!, $matrixID: ID!) {
+    createCategory (title: $title, description: $description, sorting: $sorting, weight: $weight, matrixID: $matrixID) {
       id
     }
   }`

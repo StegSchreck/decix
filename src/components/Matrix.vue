@@ -20,9 +20,9 @@
             <el-button type="primary" size="mini" icon="el-icon-circle-plus" plain @click="categoryDialogVisible = true" style="width: 100%"/>
             <el-collapse v-if="item.categories.length > 0">
               <el-collapse-item v-for="category in item.categories" :key="category.id" :title="category.title" :name="category.id">
-                <div>Description: {{ category.description }}</div>
-                <div>Sorting: {{ category.sorting }}</div>
-                <div>Weight: {{ category.weight }}</div>
+                <div><i class="el-icon-tickets"></i> Description: {{ category.description }}</div>
+                <div><i class="el-icon-sort"></i> Sorting: {{ category.sorting }}</div>
+                <div><i class="el-icon-warning"></i> Weight: {{ category.weight }}</div>
                 [<router-link :to="{ name: 'Category', params: { id: category.id } }">category {{ category.id }}</router-link>]
               </el-collapse-item>
             </el-collapse>
@@ -69,16 +69,23 @@
         :visible.sync="categoryDialogVisible"
         width="50%">
         <div id="CreateCategoryForm">
-          <el-form :model="createCategoryForm" ref="createCategoryForm" label-width="40px" status-icon>
+          <el-form :model="createCategoryForm" ref="createCategoryForm" label-width="80px" status-icon>
             <el-form-item prop="title" label="Title">
               <el-input v-model="createCategoryForm.title" :autofocus="categoryDialogVisible">
-                <el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitCategoryForm"/>
+                <!--<el-button slot="append" icon="el-icon-circle-plus" type="primary" @click="submitCategoryForm"/>-->
               </el-input>
+            </el-form-item>
+            <el-form-item prop="weight" label="Weight">
+              <el-input-number v-model="createCategoryForm.weight" :min="0" :max="100"></el-input-number>
+            </el-form-item>
+            <el-form-item prop="decription" label="Description">
+              <el-input v-model="createCategoryForm.description" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="categoryDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline"  @click="submitCategoryForm">Create</el-button>
+          <el-button type="info" icon="el-icon-circle-close-outline"  @click="categoryDialogVisible = false">Cancel</el-button>
         </span>
       </el-dialog>
       <el-dialog
@@ -148,7 +155,9 @@
         categoryDialogVisible: false,
         alternativeDialogVisible: false,
         createCategoryForm: {
-          title: ''
+          title: '',
+          weight: 0,
+          description: ''
         },
         createAlternativeForm: {
           title: ''
@@ -193,7 +202,9 @@
           mutation: NEW_CATEGORY_MUTATION,
           variables: {
             title: this.createCategoryForm.title,
-            sorting: this.getHighestCategorySorting() + 1,
+            weight: this.createCategoryForm.weight,
+            description: this.createCategoryForm.description,
+            sorting: this.getHighestCategorySorting() + 1, // always add at bottom
             matrixID: this.matrix[0].id
           }
         }).then((data) => {
@@ -209,7 +220,7 @@
           mutation: NEW_ALTERNATIVE_MUTATION,
           variables: {
             title: this.createAlternativeForm.title,
-            sorting: this.getHighestAlternativeSorting() + 1,
+            sorting: this.getHighestAlternativeSorting() + 1, // always add at bottom
             matrixID: this.matrix[0].id
           }
         }).then((data) => {
