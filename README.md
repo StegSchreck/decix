@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/StegSchreck/decix/blob/master/src/assets/decix.png" width="250px">
+  <img src="https://github.com/StegSchreck/decix/blob/master/src/assets/img/decix.png" width="250px">
 </p>
 
 # decix
